@@ -19,8 +19,8 @@ public class When_creating_a_survivor
     public void Then_survivor_Name_CannotBeEmpty()
     {
         var newSut = Survivor.With("");
-
-        newSut.IfSome( x => Assert.Fail("should not be possible to create a survivor with an empty name"));
+     //   newSut.IfSome( x => Assert.Fail("should not be possible to create a survivor with an empty name"));
+        Assert.True(newSut.IsNone);
     }
 
     [Fact]
@@ -35,4 +35,27 @@ public class When_creating_a_survivor
             None: () => Assert.Fail("failed test")
         );
     }
+
+    [Fact]
+    public void then_the_survivro_begins_with_zero_wounds()
+    {
+         var survivor = Survivor.With("bar");
+
+         Assert.Equal(0, survivor.ValueUnsafe().Wound );
+    }
+
+    [Fact]
+    public void then_the_survivor_dies_immediately_after_receiving_2_Wounds()
+    {
+        var survivor = Survivor.With("bar");
+
+        survivor.ValueUnsafe().Wounded();
+
+        Assert.Equal(1, survivor.ValueUnsafe().Wound );
+        Assert.False( survivor.ValueUnsafe().Dead() );
+    }
+
+    // Fluent en .Net
+
+
 }
