@@ -4,6 +4,9 @@ Original source: https://github.com/ardalis/kata-catalog/blob/main/katas/Zombie%
 
 ## Description
 
+by Guillaume: approche fonctionnelle et DDD
+
+
 This kata constructs a model for a zombie boardgame's survivors.
 If you enjoy the kata, you may find the Zombicide Black Plague (or another) series of boardgames fun as well.
 Complete each step before reading ahead to the next one. Revise your design to react to new requirements as they appear.
