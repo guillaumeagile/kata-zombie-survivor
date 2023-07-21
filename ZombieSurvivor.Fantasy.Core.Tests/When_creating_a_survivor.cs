@@ -44,9 +44,8 @@ public class When_creating_a_survivor
     {
         var sut = SurvivorBuilder.WithName("foo").Build();
 
-        //var isWounded
         //assert
-        sut.StateofWounds().Should().Be(Wounds.None);
+        // sut.StateofWounds().Should().Be(Wounds.None);
     }
 
 
