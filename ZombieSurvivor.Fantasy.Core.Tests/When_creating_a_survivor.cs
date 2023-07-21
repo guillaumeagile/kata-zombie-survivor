@@ -39,7 +39,15 @@ public class When_creating_a_survivor
         sut.Should().NotBe(new InvalidSurvivor());
     }
   
+  [Fact]
+    public void ValidSurvivorMustNotBeWoundedAtTheBegining()
+    {
+        var sut = SurvivorBuilder.WithName("foo").Build();
 
+        //var isWounded
+        //assert
+        sut.StateofWounds().Should().Be(Wounds.None);
+    }
 
 
 }
