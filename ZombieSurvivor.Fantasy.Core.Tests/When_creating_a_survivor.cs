@@ -18,7 +18,7 @@ public class When_creating_a_survivor
         
 
         // assert
-       sut.Should().Be(otherSut);
+       sut.GetValueOrDefault().Should().Be(otherSut.GetValueOrDefault());
     }
 
    [Fact]
@@ -27,7 +27,13 @@ public class When_creating_a_survivor
         var sut = SurvivorBuilder.WithName("").Build();
 
         //assert
-        sut.Should().Be(new InvalidSurvivor());
+        sut.HasValue.Should().Be(false);
+
+        // assert with match
+          sut.Match(
+                    v => throw new Exception(),
+                    () => true.Should().BeTrue()
+                );
     }
   
      [Fact]
@@ -36,7 +42,11 @@ public class When_creating_a_survivor
         var sut = SurvivorBuilder.WithName("foo").Build();
 
         //assert
-        sut.Should().NotBe(new InvalidSurvivor());
+       
+         sut.Match(
+                    v => v.Should().Be( SurvivorBuilder.WithName("foo").Build().GetValueOrDefault()) ,
+                    () => throw new Exception()
+                );
     }
   
   [Fact]

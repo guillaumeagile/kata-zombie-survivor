@@ -1,4 +1,7 @@
 namespace ZombieSurvivor.Fantasy.Core.Tests;
+
+using NCommons.Monads;
+
 using ZombieSurvivor.Fantasy.Core;
 
 public  class SurvivorBuilder
@@ -9,5 +12,5 @@ public  class SurvivorBuilder
 
     internal static SurvivorBuilder WithName(string name) => new SurvivorBuilder(name);
 
-    public ISurvivor Build() =>  string.IsNullOrEmpty(_name) ? new InvalidSurvivor() :  new Survivor(_name);
+    public Optional<Survivor> Build() =>  string.IsNullOrEmpty(_name) ? Optional<Survivor>.Empty :  new Optional<Survivor> (new Survivor(_name));
 }

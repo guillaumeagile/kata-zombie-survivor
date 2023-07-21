@@ -12,8 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="LanguageExt.Core" Version="4.4.2" />
+    <PackageReference Include="LanguageExt.Core" Version="4.4.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
+    <PackageReference Include="NCommons.Monads" Version="2.0.0" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.assert" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
@@ -30,5 +31,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ZombieSurvivor.Fantasy.Core\ZombieSurvivor.Fantasy.Core.csproj" />
   </ItemGroup>
+
 
 </Project>
