@@ -1,62 +1,45 @@
 using LanguageExt.UnsafeValueAccess;
 using FluentAssertions;
+using ZombieSurvivor.Fantasy.Core;
 
 namespace ZombieSurvivor.Fantasy.Core.Tests;
 
 public class When_creating_a_survivor
 {
-     Survivor sut {get;}
 
-    public When_creating_a_survivor() =>
-        sut =  new Survivor("foo");
 
     [Fact]
-    public void Then_survivor_has_a_non_empty_name()
+    public void TwoSurvivorsOfSameNameAreEquals()
     {
-        Assert.NotEmpty(sut.Name);
+        // arrange
+        var sut = SurvivorBuilder.WithName("foo").Build();
+        //new Survivor("foo");
+        var otherSut = SurvivorBuilder.WithName("foo").Build();
+        
+
+        // assert
+       sut.Should().Be(otherSut);
     }
 
-    [Fact]
-    public void Then_survivor_Name_CannotBeEmpty()
+   [Fact]
+    public void SurvivorMustHaveAName()
     {
-        var newSut = Survivor.With("");
-     //   newSut.IfSome( x => Assert.Fail("should not be possible to create a survivor with an empty name"));
-        Assert.True(newSut.IsNone);
-    }
+        var sut = SurvivorBuilder.WithName("").Build();
 
-    [Fact]
-    public void Then_survivor_canChangeItsName()
+        //assert
+        sut.Should().Be(new InvalidSurvivor());
+    }
+  
+     [Fact]
+    public void ValidSurvivorMustNotBeInvalid()
     {
-        var newSut = Survivor.With("bar");
+        var sut = SurvivorBuilder.WithName("foo").Build();
 
-        Assert.Equal("bar", newSut.ValueUnsafe().Name);  // VITE ECRIT MAIS NON SOUHAITABLE
-
-        newSut.Match(
-            Some: survivor => Assert.Equal("bar", survivor.Name),
-            None: () => Assert.Fail("failed test")
-        );
+        //assert
+        sut.Should().NotBe(new InvalidSurvivor());
     }
+  
 
-    [Fact]
-    public void then_the_survivro_begins_with_zero_wounds()
-    {
-         var survivor = Survivor.With("bar");
-
-         Assert.Equal(0, survivor.ValueUnsafe().Wound );
-    }
-
-    [Fact]
-    public void then_the_survivor_dies_immediately_after_receiving_2_Wounds()
-    {
-        var survivor = Survivor.With("bar");
-
-        var newSurvirvorState = survivor.ValueUnsafe().Wounded();
-
-      //  deadSurvirvorState.Should().NotBeAssignableTo<Survivor>();
-
-    }
-
-    // Fluent en .Net
 
 
 }

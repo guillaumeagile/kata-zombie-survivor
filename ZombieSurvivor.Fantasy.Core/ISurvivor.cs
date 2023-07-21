@@ -1,4 +1,4 @@
-﻿namespace ZombieSurvivor.Fantasy.Core;
+namespace ZombieSurvivor.Fantasy.Core;
 
 public interface ISurvivor
 {
