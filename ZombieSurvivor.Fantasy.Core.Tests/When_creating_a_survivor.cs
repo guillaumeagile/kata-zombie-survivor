@@ -15,41 +15,59 @@ public class When_creating_a_survivor
         var sut = SurvivorBuilder.WithName("foo").Build();
         //new Survivor("foo");
         var otherSut = SurvivorBuilder.WithName("foo").Build();
-        
 
-        // assert
-       sut.GetValueOrDefault().Should().Be(otherSut.GetValueOrDefault());
+        // naive monad use
+        sut.IfSome(v => otherSut.IfSome(w => v.Should().Be(w)));
     }
 
-   [Fact]
+    [Fact]
+    public void MakeGoodUseOfTheMonad()
+    {
+        // arrange
+        var sut = SurvivorBuilder.WithName("ok").Build();
+        var otherSut = SurvivorBuilder.WithName("ok").Build();
+
+        // better monad use
+        sut.Match(
+            Some: v =>
+            {
+                otherSut.Match(
+                Some: w => w.Should().Be(v),
+                None: () => throw new Exception("2nd survivor name should not be empty")
+            );
+            },
+            None: () => throw new Exception("first survivor name should not be empty")
+        );
+    }
+
+    [Fact]
     public void SurvivorMustHaveAName()
     {
         var sut = SurvivorBuilder.WithName("").Build();
 
         //assert
-        sut.HasValue.Should().Be(false);
+        sut.IsNone.Should().Be(true);
 
         // assert with match
-          sut.Match(
-                    v => throw new Exception(),
-                    () => true.Should().BeTrue()
-                );
+        sut.Match(
+                  v => throw new Exception(),
+                  () => true.Should().BeTrue()
+              );
     }
-  
-     [Fact]
+
+    [Fact]
     public void ValidSurvivorMustNotBeInvalid()
     {
         var sut = SurvivorBuilder.WithName("foo").Build();
 
         //assert
-       
-         sut.Match(
-                    v => v.Should().Be( SurvivorBuilder.WithName("foo").Build().GetValueOrDefault()) ,
-                    () => throw new Exception()
-                );
+        sut.Match(
+                   v => v.name.Should().Be("foo"),
+                   () => throw new Exception()
+               );
     }
-  
-  [Fact]
+
+    [Fact]
     public void ValidSurvivorMustNotBeWoundedAtTheBegining()
     {
         var sut = SurvivorBuilder.WithName("foo").Build();
