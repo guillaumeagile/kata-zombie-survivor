@@ -28,7 +28,7 @@ public class When_creating_a_survivor
         var otherSut = SurvivorBuilder.WithName("ok").Build();
 
         // better monad use
-        sut.Match(
+        _ = sut.Match(
             Some: v =>
             {
                 otherSut.Match(
